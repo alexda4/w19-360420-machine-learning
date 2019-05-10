@@ -10,7 +10,11 @@ public class kNNMain{
 
     // TASK 1: Use command line arguments to point DataSet.readDataSet method to
     // the desired file. Choose a given DataPoint, and print its features and label
-	int n = 149;
+	int n = 20;
+	
+	double fracTest = 0.2;
+	double fracTrain = 0.8;
+
 	
 	List<DataPoint> help = DataSet.readDataSet(args[0]);
 	
@@ -26,9 +30,25 @@ public class kNNMain{
 		System.out.println(x[i]);
 	
 	}
+	
+	
 
     //TASK 2:Use the DataSet class to split the fullDataSet into Training and Held Out Test Dataset
+	
+	List<DataPoint> testSet = DataSet.getTestSet(help, fracTest);
 
+	List<DataPoint> trainingSet = DataSet.getTrainingSet(help, fracTrain);
+	
+	String trainLabel = trainingSet.get(n).getLabel();
+	
+	double[] xTraining = help.get(n).getX();
+	
+	System.out.println(trainLabel);
+	
+	for(int i = 0; i<xTraining.length; i++) {
+		
+		System.out.println(xTraining[i]);
+	}
 
     // TASK 3: Use the DataSet class methods to plot the 2D data (binary and multi-class)
 
