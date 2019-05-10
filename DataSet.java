@@ -249,6 +249,21 @@ public class DataSet {
 
   ////////////////////////////////////////////////////////////////////////////
   // TASK 4: make a method here called distanceEuclid 
+  public static double distanceEuclid(DataPoint dp1, DataPoint dp2) {
+	  
+	  double[] dp1X = dp1.getX();
+	  
+	  double[] dp2X = dp2.getX();
+	  
+	  double sum = 0;
+	  for(int i = 0; i < dp1X.length; i++) {
+		  
+		  sum += Math.pow(dp1X[i]-dp2X[i], 2);
+	  }
+	  
+	  return Math.sqrt(sum);
+  }
+	
 
   ////////////////////////////////////////////////////////////////////////////
 
