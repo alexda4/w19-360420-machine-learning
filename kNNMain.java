@@ -10,7 +10,7 @@ public class kNNMain{
 
     // TASK 1: Use command line arguments to point DataSet.readDataSet method to
     // the desired file. Choose a given DataPoint, and print its features and label
-	int n = 7;
+	int n = 149;
 	
 	List<DataPoint> help = DataSet.readDataSet(args[0]);
 	
