@@ -61,10 +61,12 @@ public class kNNMain{
 	
 	System.out.println(distTest);
 
-
-
     // TASK 5: Use the KNNClassifier class to determine the k nearest neighbors to a given DataPoint,
     // and make a print a predicted target label
+	
+	KNNClassifier predicktor = new KNNClassifier(3);
+	
+	System.out.println(predicktor.predict(trainingSet, trainingSet.get(6)));
 
 
 
