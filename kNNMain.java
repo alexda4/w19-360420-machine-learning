@@ -14,6 +14,10 @@ public class kNNMain{
 	
 	double fracTest = 0.2;
 	double fracTrain = 0.8;
+	
+	int neighbourNumber = 3;
+	
+	int loopNumber = 1000;
 
 	
 	List<DataPoint> help = DataSet.readDataSet(args[0]);
@@ -64,7 +68,7 @@ public class kNNMain{
     // TASK 5: Use the KNNClassifier class to determine the k nearest neighbors to a given DataPoint,
     // and make a print a predicted target label
 	
-	KNNClassifier predicktor = new KNNClassifier(3);
+	KNNClassifier predicktor = new KNNClassifier(neighbourNumber);
 	
 	System.out.println(predicktor.predict(trainingSet, trainingSet.get(6)));
 
@@ -74,31 +78,42 @@ public class kNNMain{
     // point based on nearest neighbors in training set. Calculate accuracy of model. 
 	String[] predictedLabels = new String[testSet.size()];
 	
-	for(int i = 0; i < testSet.size(); i++) {
+	double[] accuracies = new double[loopNumber];
+	for(int j = 0; j < accuracies.length; j++) {
 		
-		predictedLabels[i] = predicktor.predict(trainingSet, testSet.get(i));
+		help = DataSet.readDataSet(args[0]);
 		
-	}
+		testSet = DataSet.getTestSet(help, fracTest);
+
+		trainingSet = DataSet.getTrainingSet(help, fracTrain);
+		
+		for(int i = 0; i < testSet.size(); i++) {
+		
+			predictedLabels[i] = predicktor.predict(trainingSet, testSet.get(i));
+		
+		}
 	
-	int gotRight = 0;
+		int gotRight = 0;
 	
-	for(int i = 0; i < testSet.size(); i++) {
+		for(int i = 0; i < testSet.size(); i++) {
 		
-		//System.out.println(predictedLabels[i].equals(testSet.get(i).getLabel()));
+			//System.out.println(predictedLabels[i].equals(testSet.get(i).getLabel()));
 		
-		if(predictedLabels[i].equals(testSet.get(i).getLabel())) {
+			if(predictedLabels[i].equals(testSet.get(i).getLabel())) {
 			
 			gotRight++;
 			
+			}
 		}
+	
+		accuracies[j] = gotRight/(double)(testSet.size());
 	}
 	
-	double accuracy = gotRight/(double)(testSet.size());
+	System.out.println("Accuracy mean over " + loopNumber + " loops is: " + mean(accuracies));
+	System.out.println("Accuracy standard dev over " + loopNumber + " loops is: " + standardDeviation(accuracies));
 	
-	System.out.println("Accuracy is: " + accuracy);
-	
-	System.out.println(predictedLabels[3]);
-	System.out.println(testSet.get(3).getLabel());
+	//System.out.println(predictedLabels[3]);
+	//System.out.println(testSet.get(3).getLabel());
   }
 
   public static double mean(double[] arr){
