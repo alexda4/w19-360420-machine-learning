@@ -79,6 +79,9 @@ public class kNNMain{
 	String[] predictedLabels = new String[testSet.size()];
 	
 	double[] accuracies = new double[loopNumber];
+	double[] precisions = new double[loopNumber];
+	double[] recall = new double[loopNumber];
+	
 	for(int j = 0; j < accuracies.length; j++) {
 		
 		help = DataSet.readDataSet(args[0]);
@@ -94,23 +97,47 @@ public class kNNMain{
 		}
 	
 		int gotRight = 0;
+		int gotWrong = 0;
+		int truePositives = 0;
+		int falsePositives = 0;
+		int malignants = 0;
 	
 		for(int i = 0; i < testSet.size(); i++) {
 		
 			//System.out.println(predictedLabels[i].equals(testSet.get(i).getLabel()));
 		
 			if(predictedLabels[i].equals(testSet.get(i).getLabel())) {
+				gotRight++;
+				if(predictedLabels[i].equals("malignant")) {
+					truePositives++;
+				}
+				if(testSet.get(i).getLabel().equals("malignant")) {
+					malignants++;
+				}
+			}
 			
-			gotRight++;
-			
+			else {
+				gotWrong++;
+				if(predictedLabels[i].equals("malignant")) {
+					falsePositives++;
+				}
+				if(testSet.get(i).getLabel().equals("malignant")) {
+					malignants++;
+				}
 			}
 		}
 	
 		accuracies[j] = gotRight/(double)(testSet.size());
+		precisions[j] = truePositives/(double)(truePositives+falsePositives);
+		recall[j] = truePositives/(double)(malignants);
 	}
 	
-	System.out.println("Accuracy mean over " + loopNumber + " loops is: " + mean(accuracies));
-	System.out.println("Accuracy standard dev over " + loopNumber + " loops is: " + standardDeviation(accuracies));
+	System.out.println("Accuracy mean over " + loopNumber + " loops is: " + (mean(accuracies)*100));
+	System.out.println("Accuracy standard dev over " + loopNumber + " loops is: " + (standardDeviation(accuracies)*100));
+	System.out.println("Precision mean over " + loopNumber + " loops is: " + (mean(precisions)*100));
+	System.out.println("Precision standard dev over " + loopNumber + " loops is: " + (standardDeviation(precisions)*100));
+	System.out.println("Recall mean over " + loopNumber + " loops is: " + (mean(recall)*100));
+	System.out.println("Recall standard dev over " + loopNumber + " loops is: " + (standardDeviation(recall)*100));
 	
 	//System.out.println(predictedLabels[3]);
 	//System.out.println(testSet.get(3).getLabel());
