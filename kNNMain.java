@@ -15,7 +15,7 @@ public class kNNMain{
 	double fracTest = 0.2;
 	double fracTrain = 0.8;
 	
-	int neighbourNumber = 3;
+	int neighbourNumber = 5;
 	
 	int loopNumber = 1000;
 
@@ -138,6 +138,8 @@ public class kNNMain{
 	System.out.println("Precision standard dev over " + loopNumber + " loops is: " + (standardDeviation(precisions)*100));
 	System.out.println("Recall mean over " + loopNumber + " loops is: " + (mean(recall)*100));
 	System.out.println("Recall standard dev over " + loopNumber + " loops is: " + (standardDeviation(recall)*100));
+	
+	DataSet.printLabelFrequencies(testSet);
 	
 	//System.out.println(predictedLabels[3]);
 	//System.out.println(testSet.get(3).getLabel());
